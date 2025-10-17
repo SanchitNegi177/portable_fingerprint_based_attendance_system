@@ -6,6 +6,7 @@ import base64
 import json
 import pygame
 import time
+import os
 
 SURFACE_WIDTH=800
 SURFACE_HEIGHT=350
@@ -151,7 +152,10 @@ def verify_fingerprint(verified_uids,enrolled_fingerprints,cipher_suite):
 
 
 def main():
-    key ='NWRmMTk3ZWUwY2RjNjA3NWY4NzQ2NmQyOGRkYzczMmM='
+    def main():
+    key = os.getenv('FERNET_KEY')  
+    if key is None:
+        raise ValueError("FERNET_KEY environment variable is not set")
     cipher_suite = Fernet(key)
 
     # Load the enrolled fingerprints (Encryted templates)
