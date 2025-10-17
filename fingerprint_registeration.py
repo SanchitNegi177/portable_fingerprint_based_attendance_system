@@ -6,6 +6,7 @@ import user_interface as ui
 import main_menu as mm
 import fingerprint_validation as fv
 import base64
+import os
 
 # Initialize the fingerprint sensor
 fingerprint = PyFingerprint('/dev/ttyUSB0', 57600)
@@ -118,7 +119,10 @@ def main():
     # Create a dictionary to store enrolled fingerprints
     enrolled_fingerprints = {}
 
-    key ='NWRmMTk3ZWUwY2RjNjA3NWY4NzQ2NmQyOGRkYzczMmM='
+    def main():
+    key = os.getenv('FERNET_KEY')  
+    if key is None:
+        raise ValueError("FERNET_KEY environment variable is not set")
     cipher_suite = Fernet(key)
 
     try:
